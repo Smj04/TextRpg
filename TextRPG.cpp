@@ -3,12 +3,12 @@
 #include <Windows.h>
 
 using namespace std;
-void gotoxy(int x, int y) {
-	COORD m;
-	m.X = x;
-	m.Y = y;
-	SetConsoleCursorPosition(GetStdHandle(STD_OUTPUT_HANDLE), m);
-}
+//void gotoxy(int x, int y) {
+//	COORD m;
+//	m.X = x;
+//	m.Y = y;
+//	SetConsoleCursorPosition(GetStdHandle(STD_OUTPUT_HANDLE), m);
+//}
 enum MAIN_MENU {
 	MM_NONE,
 	MM_MAP,
@@ -60,6 +60,9 @@ enum EQUIP {
 #define INVENTORY_MAX	20
 #define STORE_WEAPON_MAX 3
 #define STORE_ARMOR_MAX 3
+#define LEVEL_MAX 10
+
+
 
 struct _Item {
 	char strName[NAME_SIZE];
@@ -112,10 +115,57 @@ struct _Monster {		//_tagMonster
 	int iGoldMax;
 
 };
+
+struct LevelUpstatus {
+	int iAttackMin;
+	int iAttackMax;
+	int iArmorMin;
+	int iArmorMax;
+	int iHPMin;
+	int iHPMax;
+	int iMPMin;
+	int iMPMax;
+};
 int main() {
 
 	srand((unsigned int)time(0));
 
+	//레벨업에 필요한 경험치 목록을 만든다.
+	const int iLevelUpExp[LEVEL_MAX] = { 400, 10000, 20000, 35000, 50000, 70000, 100000, 150000, 200000,400000};
+
+	//JOB_END 는 4. 그런데 직업은 3개이므로 -1해서 배열을 각 직업별로
+	//생성하도록 한다.
+
+	LevelUpstatus tLvUpTable[JOB_END - 1] = {};
+
+	tLvUpTable[JOB_KNIGHT - 1].iAttackMin = 4;
+	tLvUpTable[JOB_KNIGHT - 1].iAttackMax = 10;
+	tLvUpTable[JOB_KNIGHT - 1].iArmorMin = 8;
+	tLvUpTable[JOB_KNIGHT - 1].iArmorMax = 16;
+	tLvUpTable[JOB_KNIGHT - 1].iHPMin = 50;
+	tLvUpTable[JOB_KNIGHT - 1].iHPMax = 100;
+	tLvUpTable[JOB_KNIGHT - 1].iMPMin = 10;
+	tLvUpTable[JOB_KNIGHT - 1].iMPMax = 20;
+
+	tLvUpTable[JOB_ARCHER - 1].iAttackMin = 10;
+	tLvUpTable[JOB_ARCHER - 1].iAttackMax = 15;
+	tLvUpTable[JOB_ARCHER - 1].iArmorMin = 5;
+	tLvUpTable[JOB_ARCHER - 1].iArmorMax = 10;
+	tLvUpTable[JOB_ARCHER - 1].iHPMin = 30;
+	tLvUpTable[JOB_ARCHER - 1].iHPMax =60;
+	tLvUpTable[JOB_ARCHER - 1].iMPMin = 30;
+	tLvUpTable[JOB_ARCHER - 1].iMPMax = 50;
+
+	tLvUpTable[JOB_WIZARD - 1].iAttackMin = 15;
+	tLvUpTable[JOB_WIZARD - 1].iAttackMax = 20;
+	tLvUpTable[JOB_WIZARD - 1].iArmorMin = 3;
+	tLvUpTable[JOB_WIZARD - 1].iArmorMax = 7;
+	tLvUpTable[JOB_WIZARD - 1].iHPMin = 20;
+	tLvUpTable[JOB_WIZARD - 1].iHPMax = 40;
+	tLvUpTable[JOB_WIZARD - 1].iMPMin = 50;
+	tLvUpTable[JOB_WIZARD - 1].iMPMax = 100;
+
+	//이름
 	_Player tPlayer = {}; //null
 	/*system("mode con cols=119 lines=30 | title Text RPG");*/
 	cout << "\n\n\n\n";
@@ -424,19 +474,20 @@ int main() {
 					case MT_HARD:
 						cout << "--------------- HARD --------------" << endl; break;
 					}
-					//플레이어 정보 출력
+					//플레이어 정보 출력를 출력한다.
 
 					cout << "이름 : " << tPlayer.strName << endl;
 					cout << "\t직업 : " << tPlayer.strJobName << endl;
 					cout << "레벨 : " << tPlayer.iLevel << "\t경험치 : " <<
-						tPlayer.iExp << endl;
-
+						tPlayer.iExp << " / " << iLevelUpExp[tPlayer.iLevel-1]<<endl;
+					
 					//무기를 장착하고 있을 경우 공격력에 무기공격력을 추가하여 출력한다.
 					if (tPlayer.bEquip[EQ_WEAPON] == true) {
 						cout << "공격력 : " << tPlayer.iAttackMin << " + " <<
 							tPlayer.tEquip[EQ_WEAPON].iMin << " - " <<
 							tPlayer.iAttackMax << " + " << tPlayer.tEquip[EQ_WEAPON].iMax;
 					}
+
 					else {
 						cout << "공격력 : " << tPlayer.iAttackMin << " - " <<
 							tPlayer.iAttackMax;
@@ -460,6 +511,12 @@ int main() {
 
 					else
 						cout << "장착 무기 : 없음       ";
+
+					if (tPlayer.bEquip[EQ_ARMOR])
+						cout << "\t장착 방어구 : " << tPlayer.tEquip[EQ_ARMOR].strName;
+
+					else
+						cout << "\t장착방어구 : 없음"<<endl;
 
 					cout << "보유골드 : " << tPlayer.tInventory.iGold << " Gold" << endl << endl;
 
@@ -498,8 +555,19 @@ int main() {
 						//15 - 5+1을 하면 11이 된다. 11로 나눈 나머지는 0 ~10이
 						//나오게 되고 여기에 Min값인 5를 더하게 되면
 						//+1을 해서 5~15사이로 값이 나오게 되는것이다
-						int iAttack = rand() % (tPlayer.iAttackMax - tPlayer.iAttackMin + 1) +
-							tPlayer.iAttackMin;
+						int iAttackMin = tPlayer.iAttackMin;
+						int iAttackMax = tPlayer.iAttackMax;
+
+						//무기를 장착하고 있을 경우 무기의 Min, Max를 더해준다.
+						if (tPlayer.bEquip[EQ_WEAPON])
+						{
+							iAttackMin += tPlayer.tEquip[EQ_WEAPON].iMin;
+							iAttackMin += tPlayer.tEquip[EQ_WEAPON].iMax;
+						}
+						
+
+						int iAttack = rand() % (iAttackMax -iAttackMin + 1) +
+							iAttackMin;
 						int iArmor = rand() % (tMonster.iArmorMax - tMonster.iArmorMin + 1) +
 							tMonster.iArmorMin;
 
@@ -529,6 +597,43 @@ int main() {
 
 							tMonster.iHP = tMonster.iHPMax;
 							tMonster.iMP = tMonster.iMPMax;
+
+							//레벨업을 했는지 체크해본다.
+							if (tPlayer.iExp >= iLevelUpExp[tPlayer.iLevel - 1]) {
+
+								//플레이어 경험치를 레벨업에 필요한 경험치만큼 차감한다.
+								tPlayer.iExp -= iLevelUpExp[tPlayer.iLevel - 1];
+
+								//레벨을 증가시킨다.
+								++tPlayer.iLevel;
+
+								cout << "레벨업 하였습니다." << endl;
+
+								//능력치를 상승시킨다.
+								//직업 인덱스를 구한다.
+								int iJobIndex = tPlayer.eJob - 1;
+								int AttackUp = rand() % (tLvUpTable[iJobIndex].iAttackMax - tLvUpTable[iJobIndex].iAttackMin + 1) +
+									tLvUpTable[iJobIndex].iAttackMin;
+								int iArmorUp = rand() % (tLvUpTable[iJobIndex].iArmorMax - tLvUpTable[iJobIndex].iArmorMin + 1) +
+									tLvUpTable[iJobIndex].iArmorMin;
+								int iHPUp = rand() % (tLvUpTable[iJobIndex].iHPMax - tLvUpTable[iJobIndex].iHPMin + 1) +
+									tLvUpTable[iJobIndex].iHPMin;
+								int iMPUp = rand() % (tLvUpTable[iJobIndex].iHPMin - tLvUpTable[iJobIndex].iHPMin + 1) +
+									tLvUpTable[iJobIndex].iMPMin;
+
+								tPlayer.iAttackMin += tLvUpTable[iJobIndex].iAttackMin;
+								tPlayer.iAttackMin += tLvUpTable[iJobIndex].iAttackMax;
+								tPlayer.iArmorMin += tLvUpTable[iJobIndex].iArmorMin;
+								tPlayer.iArmorMax += tLvUpTable[iJobIndex].iArmorMax;
+
+								tPlayer.iHPMax += iHPUp;
+								tPlayer.iMPMax += iMPUp;
+
+								//체력과 마나를 회복시킨다.
+								tPlayer.iHP = tPlayer.iHPMax;
+								tPlayer.iMP = tPlayer.iMPMax;
+							}
+
 							system("pause");
 							break;
 						}
@@ -547,19 +652,15 @@ int main() {
 						iArmor = rand() % (iArmorMax - iArmorMin + 1) +
 							iArmorMin;
 
-						iArmor = rand() % (tPlayer.iArmorMax - tPlayer.iArmorMin + 1) +
-							tPlayer.iArmorMin;
-
 
 						iDamage = iAttack - iArmor;
 						// 삼항연산자 : 조건식 ? true일때값 : false일때값;
 						iDamage = iDamage < 1 ? 1 : iDamage;
 
-
-
 						/*if (iDamage < 1)
 							iDamage = 1;*/
 
+						//몬스터 HP를 감소시킨다.
 						tPlayer.iHP -= iDamage;
 
 						cout << tMonster.strName << " 가 " << tPlayer.strName <<
