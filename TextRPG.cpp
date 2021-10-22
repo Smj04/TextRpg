@@ -1,14 +1,8 @@
 ﻿#include <iostream>
 #include<time.h>
-#include <Windows.h>
 
 using namespace std;
-//void gotoxy(int x, int y) {
-//	COORD m;
-//	m.X = x;
-//	m.Y = y;
-//	SetConsoleCursorPosition(GetStdHandle(STD_OUTPUT_HANDLE), m);
-//}
+
 enum MAIN_MENU {
 	MM_NONE,
 	MM_MAP,
@@ -167,7 +161,7 @@ int main() {
 
 	//이름
 	_Player tPlayer = {}; //null
-	/*system("mode con cols=119 lines=30 | title Text RPG");*/
+	system("mode con cols=119 lines=30 | title Text RPG");
 	cout << "\n\n\n\n";
 	cout << "\t\t"; cout << "@@@@@@@@@@   @@@@@@@@@   @@@   @@@   @@@@@@@@@@   @@@@@@@@    @@@@@@@@   @@@@@@@\n";
 	cout << "\t\t"; cout << "    @        @             @   @         @        @      @    @      @   @          \n";
@@ -200,52 +194,10 @@ int main() {
 		system("pause");
 		cout << endl;
 
-		/*cout << "____________________$$$$" << endl;
-		cout << "______$$$$$$$$$_____$$$$$$" << endl;
-		cout << "____$$$$$$$$$$$$$___$$$$$$" << endl;
-		cout << "___$$$$$$$$$$$$$$$$___$$" << endl;
-		cout << "____$$$$_____$$$$$$$" << endl;
-		cout << "_____$$$$__$$$$$$$$$" << endl;
-		cout << "______$$$$$$$$$_$$$$" << endl;
-		cout << "______$$$$$$____$$$$" << endl;
-		cout << "____$$$$$$$_____$$$$" << endl;
-		cout << "___$$$$$__$$____$$$$" << endl;
-		cout << "___$$$$____$$___$$$$" << endl;
-		cout << "___$$$$_____$$__$$$$" << endl;
-		cout << "____$$$$_____$$__$$" << endl;
-		cout << "____$$$$$_____$$$" << endl;
-		cout << "______$$$$_____$$$" << endl;
-		cout << "_____$$$$$$$_____$$" << endl;
-		cout << "_____$$$$$$$______$$" << endl;
-		cout << "____$$$$$$$$_______$$" << endl;
-		cout << "___$$$$_$$$$________$$" << endl;
-		cout << "___$$$$_$$$$_________$$$$0" << endl;*/
 		cout << "직업을 선택하세요 : " << endl;
 		cout << "1 : 기사\t";
 		cout << "2 : 궁수\t";
 		cout << "3 : 마법사" << endl;
-
-		/*gotoxy(90, 10);
-		cout << "                 .," << endl;
-		cout << endl;
-		gotoxy(90, 10);
-		cout << "       .    ____/__," << endl;
-		gotoxy(90, 10);
-		cout << "     .' \  / \==\```" << endl;
-		cout << "    /    \ 77 \ |" << endl;
-		cout << "    /_.----\\__,-----." << endl;
-		cout << "<--(\_|_____<__|_____/"<<endl;
-		cout << "    \  ````/|   ``/```" << endl;
-		cout << "     `.   / |    I|" << endl;
-		cout << "       `./  |____I|" << endl;
-		cout << "            !!!!!!!" << endl;
-		cout << "            | | I |" << endl;
-		cout << "            | | I |" << endl;
-		cout << "            \ \ I |" << endl;
-		cout << "            | | I |" << endl;
-		cout << "           _|_|_I_|" << endl;
-		cout << "          /__/____|  " << endl;
-		*/
 
 		cin >> iJob;
 
@@ -355,7 +307,7 @@ int main() {
 	//(무기상점) 각 아이템 정보를 설정한다
 	strcpy_s(tStoreWeapon[0].strName, "목검");
 	strcpy_s(tStoreWeapon[0].strTypeName, "무기");
-	strcpy_s(tStoreWeapon[0].strDesc, "나무로 만든칼");
+	strcpy_s(tStoreWeapon[0].strDesc, "나무로 만든 칼");
 	tStoreWeapon[0].eType = IT_WEAPON;
 	tStoreWeapon[0].iMin = 5;
 	tStoreWeapon[0].iMax = 20;
@@ -444,7 +396,7 @@ int main() {
 				cout << "1. 쉬움\t";
 				cout << "2. 보통\t";
 				cout << "3. 어려움\t";
-				cout << "4. 뒤로가기" << endl;
+				cout << "4. 뒤로가기"<<endl;		
 
 				cin >> iMenu;
 
@@ -454,7 +406,7 @@ int main() {
 					continue;
 				}
 				//이 if문에 속한break는 맵 메뉴를 돌려주기 위한 while에 속해 있으므로
-		//이 while문을 빠져나간다.
+				//이 while문을 빠져나간다.
 
 				if (iMenu == MT_BACK) break;
 
@@ -503,7 +455,7 @@ int main() {
 							tPlayer.iArmorMax << endl;
 					}
 
-					cout << "체력 : " << tPlayer.iHP << " / " << tPlayer.iHPMax << endl;
+					cout << "\t체력 : " << tPlayer.iHP << " / " << tPlayer.iHPMax << endl;
 					cout << "게이지 : " << tPlayer.iMP << " / " << tPlayer.iMPMax << endl;
 
 					if (tPlayer.bEquip[EQ_WEAPON])
@@ -584,7 +536,8 @@ int main() {
 
 						//몬스터가 죽었을 경우를 처리한다.
 						if (tMonster.iHP <= 0) {
-							cout << tMonster.strName << " 몬스터가 사망하였습니다." << endl;
+							cout << tMonster.strName << " 몬스터가 사망하였습니다." << endl; 
+							
 
 							tPlayer.iExp += tMonster.iExp;
 							int iGold = (rand() % (tMonster.iGoldMax - tMonster.iGoldMin + 1) +
@@ -594,8 +547,21 @@ int main() {
 							cout << tMonster.iExp << " 경험치를 획득하였습니다. " << endl;
 							cout << iGold << " Gold를 획득하였습니다." << endl;
 
-							tMonster.iHP = tMonster.iHPMax;
-							tMonster.iMP = tMonster.iMPMax;
+							if (tMonster.iHP < 0){
+								system("cls");
+								cout << "GAME CLEAR!!!" << endl;
+								cout << "메뉴로 돌아가시겠습니까 ? " << endl;
+								cout << "1. 돌아가기\t2. 종료" << endl;
+
+								cin >> iMenu;
+								if (iMenu == 1) break;			//아예 끝내는 break찾기. 여기서 break는 이전화면임!!!!!!!  (화면재편성)
+								/*else if (iMenu == 2) ;*/
+								else cout << "다시 입력해주세요." << endl;
+							}
+							/*tMonster.iHP = tMonster.iHPMax;
+							tMonster.iMP = tMonster.iMPMax;*/
+							
+
 
 							//레벨업을 했는지 체크해본다.
 							if (tPlayer.iExp >= iLevelUpExp[tPlayer.iLevel - 1]) {
@@ -677,7 +643,7 @@ int main() {
 							cout << iExp << " 경험치를 잃었습니다." << endl;
 							cout << iGold << " Gold를 잃었습니다." << endl;
 
-							//플레이어의 HP 와 MP를 회복한다.
+							////플레이어의 HP 와 MP를 회복한다.
 							tPlayer.iHP = tPlayer.iHPMax;
 							tPlayer.iMP = tPlayer.iMPMax;
 
@@ -842,20 +808,13 @@ int main() {
 			}
 			break;
 		case MM_INVENTORY:
-			while (true)	//?
+			while (true)
 			{
 
 				system("cls");
 				cout << "------------------- BAG ------------------" << endl;
 
-				/*cout << "이름 : " << tPlayer.strName << "\t직업 : " <<
-					tPlayer.strJobName << endl;
-				cout << "레벨 : " << tPlayer.iLevel << "Lv"<< "\t경험치 : " <<
-					tPlayer.iExp << endl;
-				cout << "공격력 : " << tPlayer.iAttackMin << " - " <<
-					tPlayer.iAttackMax << "\t방어력 : " << tPlayer.iArmorMin <<
-					" - " << tPlayer.iArmorMax << endl;*/
-
+			
 				cout << "체력 : " << tPlayer.iHP << " / " << tPlayer.iHPMax <<
 					"\t마나 : " << tPlayer.iMP << " / " << tPlayer.iMPMax << endl;
 				cout << "보유골드 : " << tPlayer.tInventory.iGold << " Gold" << endl << endl;
