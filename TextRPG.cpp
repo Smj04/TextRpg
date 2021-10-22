@@ -535,7 +535,6 @@ int main() {
 
 					cout << "1. 공격" << endl;
 					cout << "2. 도망가기" << endl;
-					cout << "3. 스킬" << endl;
 					cout << "메뉴를 선택하세요 : ";
 					cin >> iMenu;
 
@@ -847,7 +846,7 @@ int main() {
 			{
 
 				system("cls");
-				cout << "--------------- BAG --------------" << endl;
+				cout << "------------------- BAG ------------------" << endl;
 
 				/*cout << "이름 : " << tPlayer.strName << "\t직업 : " <<
 					tPlayer.strJobName << endl;
