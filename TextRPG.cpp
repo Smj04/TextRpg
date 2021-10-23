@@ -549,58 +549,66 @@ int main() {
 
 							if (tMonster.iHP < 0){
 								system("cls");
-								cout << "GAME CLEAR!!!" << endl;
-								cout << "메뉴로 돌아가시겠습니까 ? " << endl;
-								cout << "1. 돌아가기\t2. 종료" << endl;
+								//레벨업을 했는지 체크해본다.
+								if (tPlayer.iExp >= iLevelUpExp[tPlayer.iLevel - 1]) {
+
+									//플레이어 경험치를 레벨업에 필요한 경험치만큼 차감한다.
+									tPlayer.iExp -= iLevelUpExp[tPlayer.iLevel - 1];
+
+									//레벨을 증가시킨다.
+									++tPlayer.iLevel;
+
+									cout << "레벨업 하였습니다." << endl;
+
+									//능력치를 상승시킨다.
+									//직업 인덱스를 구한다.
+									int iJobIndex = tPlayer.eJob - 1;
+									int AttackUp = rand() % (tLvUpTable[iJobIndex].iAttackMax - tLvUpTable[iJobIndex].iAttackMin + 1) +
+										tLvUpTable[iJobIndex].iAttackMin;
+									int iArmorUp = rand() % (tLvUpTable[iJobIndex].iArmorMax - tLvUpTable[iJobIndex].iArmorMin + 1) +
+										tLvUpTable[iJobIndex].iArmorMin;
+									int iHPUp = rand() % (tLvUpTable[iJobIndex].iHPMax - tLvUpTable[iJobIndex].iHPMin + 1) +
+										tLvUpTable[iJobIndex].iHPMin;
+									int iMPUp = rand() % (tLvUpTable[iJobIndex].iHPMin - tLvUpTable[iJobIndex].iHPMin + 1) +
+										tLvUpTable[iJobIndex].iMPMin;
+
+									tPlayer.iAttackMin += tLvUpTable[iJobIndex].iAttackMin;
+									tPlayer.iAttackMin += tLvUpTable[iJobIndex].iAttackMax;
+									tPlayer.iArmorMin += tLvUpTable[iJobIndex].iArmorMin;
+									tPlayer.iArmorMax += tLvUpTable[iJobIndex].iArmorMax;
+
+									tPlayer.iHPMax += iHPUp;
+									tPlayer.iMPMax += iMPUp;
+
+									//체력과 마나를 회복시킨다.
+									tPlayer.iHP = tPlayer.iHPMax;
+									tPlayer.iMP = tPlayer.iMPMax;
+								}
+
+								cout << " _____ ____  _      _____   ____  _     _____ ____  ____ " << endl;
+								cout << "/  __//  _ \/ \__/|/  __/  /   _\/ \   /  __//  _ \/  __\"" << endl;
+								cout << "| |  _| / \|| |\/|||  \    |  /  | |   |  \  | / \||  \/|" << endl;
+								cout << "| |_//| |-||| |  |||  /_   |  \_ | |_/\|  /_ | |-|||    /" << endl;
+								 cout <<"\____\\_/ \|\_/  \|\____\  \____/\____/\____\\_/ \|\_/\_\""<<endl<<endl;
+								cout << "게임으로 돌아가시겠습니까? " << endl;
+								cout << "1. 돌아가기\t" << endl;
 
 								cin >> iMenu;
-								if (iMenu == 1) break;			//아예 끝내는 break찾기. 여기서 break는 이전화면임!!!!!!!  (화면재편성)
+								if (iMenu == 1) {
+
+									/*system("pause");*/
+									break;
+									
+								}//아예 끝내는 break찾기. 여기서 break는 이전화면임!!!!!!!  (화면재편성)
 								/*else if (iMenu == 2) ;*/
-								else cout << "다시 입력해주세요." << endl;
+								
 							}
 							/*tMonster.iHP = tMonster.iHPMax;
 							tMonster.iMP = tMonster.iMPMax;*/
 							
 
 
-							//레벨업을 했는지 체크해본다.
-							if (tPlayer.iExp >= iLevelUpExp[tPlayer.iLevel - 1]) {
-
-								//플레이어 경험치를 레벨업에 필요한 경험치만큼 차감한다.
-								tPlayer.iExp -= iLevelUpExp[tPlayer.iLevel - 1];
-
-								//레벨을 증가시킨다.
-								++tPlayer.iLevel;
-
-								cout << "레벨업 하였습니다." << endl;
-
-								//능력치를 상승시킨다.
-								//직업 인덱스를 구한다.
-								int iJobIndex = tPlayer.eJob - 1;
-								int AttackUp = rand() % (tLvUpTable[iJobIndex].iAttackMax - tLvUpTable[iJobIndex].iAttackMin + 1) +
-									tLvUpTable[iJobIndex].iAttackMin;
-								int iArmorUp = rand() % (tLvUpTable[iJobIndex].iArmorMax - tLvUpTable[iJobIndex].iArmorMin + 1) +
-									tLvUpTable[iJobIndex].iArmorMin;
-								int iHPUp = rand() % (tLvUpTable[iJobIndex].iHPMax - tLvUpTable[iJobIndex].iHPMin + 1) +
-									tLvUpTable[iJobIndex].iHPMin;
-								int iMPUp = rand() % (tLvUpTable[iJobIndex].iHPMin - tLvUpTable[iJobIndex].iHPMin + 1) +
-									tLvUpTable[iJobIndex].iMPMin;
-
-								tPlayer.iAttackMin += tLvUpTable[iJobIndex].iAttackMin;
-								tPlayer.iAttackMin += tLvUpTable[iJobIndex].iAttackMax;
-								tPlayer.iArmorMin += tLvUpTable[iJobIndex].iArmorMin;
-								tPlayer.iArmorMax += tLvUpTable[iJobIndex].iArmorMax;
-
-								tPlayer.iHPMax += iHPUp;
-								tPlayer.iMPMax += iMPUp;
-
-								//체력과 마나를 회복시킨다.
-								tPlayer.iHP = tPlayer.iHPMax;
-								tPlayer.iMP = tPlayer.iMPMax;
-							}
-
-							system("pause");
-							break;
+							
 						}
 						// 몬스터가 살아있다면 플레이어를 공격한다.
 						iAttack = rand() % (tMonster.iAttackMax - tMonster.iAttackMin + 1) +
