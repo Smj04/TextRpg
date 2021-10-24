@@ -1,7 +1,15 @@
 ﻿#include <iostream>
 #include<time.h>
+#include <Windows.h>
 
 using namespace std;
+
+void gotoxy(int x, int y) {
+
+	COORD pos = { x, y };
+	SetConsoleCursorPosition(GetStdHandle(STD_OUTPUT_HANDLE), pos);
+
+}
 
 enum MAIN_MENU {
 	MM_NONE,
@@ -161,17 +169,35 @@ int main() {
 
 	//이름
 	_Player tPlayer = {}; //null
-	system("mode con cols=119 lines=30 | title Text RPG");
-	cout << "\n\n\n\n";
+	/*system("mode con cols=119 lines=30 | title Text RPG");*/
+	gotoxy(27, 1);
+	cout << " _______  _______  __   __  _______    ______    _______  _______ " << endl;
+	gotoxy(27, 2);
+	cout << "|       ||       ||  |_|  ||       |  |    _ |  |       ||       |" << endl;
+	gotoxy(27, 3);
+	cout << "|_     _||    ___||       ||_     _|  |   | ||  |    _  ||    ___|" << endl;
+	gotoxy(27, 4);
+	cout << "  |   |  |   |___ |       |  |   |    |   |_||_ |   |_| ||   | __ " << endl;
+	gotoxy(27, 5);
+	cout << "  |   |  |    ___| |     |   |   |    |    __  ||    ___||   ||  |" << endl;
+	gotoxy(27, 6);
+	cout << "  |   |  |   |___ |   _   |  |   |    |   |  | ||   |    |   |_| |" << endl;
+	gotoxy(27, 7);
+	cout << "  |___|  |_______||__| |__|  |___|    |___|  |_||___|    |_______|" << endl;
+	
+	/*cout << "\n\n\n\n";
 	cout << "\t\t"; cout << "@@@@@@@@@@   @@@@@@@@@   @@@   @@@   @@@@@@@@@@   @@@@@@@@    @@@@@@@@   @@@@@@@\n";
 	cout << "\t\t"; cout << "    @        @             @   @         @        @      @    @      @   @          \n";
 	cout << "\t\t"; cout << "    @        @              @ @          @        @       @   @@@@@@@@   @         \n";
 	cout << "\t\t"; cout << "    @        @@@@@@@@@      @@@          @        @       @   @          @    @@@@ \n";
 	cout << "\t\t"; cout << "    @        @              @ @          @        @@@@@@@@@   @          @       @  \n";
 	cout << "\t\t"; cout << "    @        @             @   @         @        @       @   @          @       @  \n";
-	cout << "\t\t"; cout << "    @        @@@@@@@@@   @@@   @@@       @         @      @   @          @@@@@@@@\n\n\n\n\n";
-	cout << "\t\t"; cout << "                          게임을 시작하려면 <Enter>를 누르세요.\n\n\n\n\n\n\n";
-	cout << "\t\t"; cout << "                              TextRPG.0 By MinjeoungSeo\n";
+	cout << "\t\t"; cout << "    @        @@@@@@@@@   @@@   @@@       @         @      @   @          @@@@@@@@\n\n\n\n\n";*/
+
+	gotoxy(15, 9);
+	cout << "                          게임을 시작하려면 <Enter>를 누르세요."<<endl;
+	gotoxy(15, 10);
+	cout << "                                 TextRPG.0 By MinjeoungSeo"<<endl;
 	getchar(); // 아무키 입력 기다림
 
 	system("cls");
@@ -393,9 +419,9 @@ int main() {
 				system("cls");
 				cout << "--------------- MAP --------------" << endl;
 				cout << "맵을 선택하세요." << endl;
-				cout << "1. 쉬움\t";
-				cout << "2. 보통\t";
-				cout << "3. 어려움\t";
+				cout << "1. 쉬움"<<endl;
+				cout << "2. 보통"<<endl;
+				cout << "3. 어려움"<<endl;
 				cout << "4. 뒤로가기"<<endl;		
 
 				cin >> iMenu;
@@ -486,7 +512,7 @@ int main() {
 						tMonster.iGoldMin << " - " << tMonster.iGoldMax << endl << endl;
 
 					cout << "1. 공격" << endl;
-					cout << "2. 도망가기" << endl;
+					cout << "2. 도망가기/끝내기" << endl;
 					cout << "메뉴를 선택하세요 : ";
 					cin >> iMenu;
 
@@ -585,29 +611,36 @@ int main() {
 									tPlayer.iMP = tPlayer.iMPMax;
 								}
 
-								cout << " _____ ____  _      _____   ____  _     _____ ____  ____ " << endl;
-								cout << "/  __//  _ \/ \__/|/  __/  /   _\/ \   /  __//  _ \/  __\"" << endl;
-								cout << "| |  _| / \|| |\/|||  \    |  /  | |   |  \  | / \||  \/|" << endl;
-								cout << "| |_//| |-||| |  |||  /_   |  \_ | |_/\|  /_ | |-|||    /" << endl;
-								 cout <<"\____\\_/ \|\_/  \|\____\  \____/\____/\____\\_/ \|\_/\_\""<<endl<<endl;
+								gotoxy(20, 1);
+								cout << " _______  _______  __   __  _______    _______  ___      _______  _______  ______   " << endl;
+								gotoxy(20, 2);
+								cout << "|       ||   _   ||  |_|  ||       |  |       ||   |    |       ||   _   ||    _ |  " << endl;
+								gotoxy(20, 3);
+								cout << "|    ___||  |_|  ||       ||    ___|  |       ||   |    |    ___||  |_|  ||   | ||  " << endl;
+								gotoxy(20, 4);
+								cout << "|   | __ |       ||       ||   |___   |       ||   |    |   |___ |       ||   |_||_ " << endl;
+								gotoxy(20, 5);
+								 cout <<"|   ||  ||       ||       ||    ___|  |      _||   |___ |    ___||       ||    __  |"<<endl;
+								gotoxy(20, 6);
+								cout << "|   |_| ||   _   || ||_|| ||   |___   |     |_ |       ||   |___ |   _   ||   |  | |"<<endl;
+								gotoxy(20, 7);
+								cout << "|_______||__| |__||_|   |_||_______|  |_______||_______||_______||__| |__||___|  |_|" << endl<<endl;
+
 								cout << "게임으로 돌아가시겠습니까? " << endl;
 								cout << "1. 돌아가기\t" << endl;
 
 								cin >> iMenu;
 								if (iMenu == 1) {
 
-									/*system("pause");*/
+									
 									break;
 									
-								}//아예 끝내는 break찾기. 여기서 break는 이전화면임!!!!!!!  (화면재편성)
-								/*else if (iMenu == 2) ;*/
+								}
 								
 							}
+							
 							/*tMonster.iHP = tMonster.iHPMax;
 							tMonster.iMP = tMonster.iMPMax;*/
-							
-
-
 							
 						}
 						// 몬스터가 살아있다면 플레이어를 공격한다.
@@ -652,11 +685,32 @@ int main() {
 							cout << iGold << " Gold를 잃었습니다." << endl;
 
 							////플레이어의 HP 와 MP를 회복한다.
-							tPlayer.iHP = tPlayer.iHPMax;
-							tPlayer.iMP = tPlayer.iMPMax;
+							/*tPlayer.iHP = tPlayer.iHPMax;
+							tPlayer.iMP = tPlayer.iMPMax;*/
+
+							system("cls");
+							gotoxy(20, 1);
+							cout << "_______  _______  __   __  _______    _______  __   __  _______  ______   " << endl;
+							gotoxy(20, 2);
+							cout << "|       ||   _   ||  |_|  ||       |  |       ||  | |  ||       ||    _ |  " << endl;
+							gotoxy(20, 3);
+							cout << "|    ___||  |_|  ||       ||    ___|  |   _   ||  |_|  ||    ___||   | ||  " << endl;
+							gotoxy(20, 4);
+							cout << "|   | __ |       ||       ||   |___   |  | |  ||       ||   |___ |   |_||_ " << endl;
+							gotoxy(20, 5);
+							cout << "|   ||  ||       ||       ||    ___|  |  |_|  ||       ||    ___||    __  |" << endl;
+							gotoxy(20, 6);
+							cout << "|   |_| ||   _   || ||_|| ||   |___   |       | |     | |   |___ |   |  | |" << endl;
+							gotoxy(20, 7);
+							cout << "|_______||__| |__||_|   |_||_______|  |_______|  |___|  |_______||___|  |_|" << endl<<endl;
+							
+							
+							exit(0);
+
 
 						}
-						system("pause");
+						/*system("pause");*/
+
 					}
 					break;
 					}
@@ -910,3 +964,4 @@ int main() {
 	return 0;
 
 }
+
