@@ -11,6 +11,9 @@ void gotoxy(int x, int y) {
 
 }
 
+
+
+
 enum MAIN_MENU {
 	MM_NONE,
 	MM_MAP,
@@ -194,9 +197,9 @@ int main() {
 	cout << "\t\t"; cout << "    @        @             @   @         @        @       @   @          @       @  \n";
 	cout << "\t\t"; cout << "    @        @@@@@@@@@   @@@   @@@       @         @      @   @          @@@@@@@@\n\n\n\n\n";*/
 
-	gotoxy(15, 9);
+	gotoxy(16, 10);
 	cout << "                          게임을 시작하려면 <Enter>를 누르세요."<<endl;
-	gotoxy(15, 10);
+	gotoxy(13, 11);
 	cout << "                                 TextRPG.0 By MinjeoungSeo"<<endl;
 	getchar(); // 아무키 입력 기다림
 
@@ -512,7 +515,8 @@ int main() {
 						tMonster.iGoldMin << " - " << tMonster.iGoldMax << endl << endl;
 
 					cout << "1. 공격" << endl;
-					cout << "2. 도망가기/끝내기" << endl;
+					cout << "2. 도망가기" << endl;
+					cout << "3. 라운드 끝내기" << endl;
 					cout << "메뉴를 선택하세요 : ";
 					cin >> iMenu;
 
@@ -523,6 +527,8 @@ int main() {
 					}
 
 					else if (iMenu == BATTLE_BACK) break;
+
+					else if (iMenu == 3) break;
 
 					switch (iMenu)
 					{
@@ -611,6 +617,7 @@ int main() {
 									tPlayer.iMP = tPlayer.iMPMax;
 								}
 
+								
 								gotoxy(20, 1);
 								cout << " _______  _______  __   __  _______    _______  ___      _______  _______  ______   " << endl;
 								gotoxy(20, 2);
