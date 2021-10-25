@@ -11,6 +11,15 @@ void gotoxy(int x, int y) {
 
 }
 
+#define LIGHTRED 12 
+#define BLACK 0 
+#define YELLOW 14
+
+void textcolor(int foreground, int background)
+{
+	int color = foreground + background * 16;
+	SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), color);
+}
 
 
 
@@ -170,10 +179,12 @@ int main() {
 	tLvUpTable[JOB_WIZARD - 1].iMPMin = 50;
 	tLvUpTable[JOB_WIZARD - 1].iMPMax = 100;
 
+
 	//이름
 	_Player tPlayer = {}; //null
 	/*system("mode con cols=119 lines=30 | title Text RPG");*/
 	gotoxy(27, 1);
+	textcolor(LIGHTRED, BLACK);
 	cout << " _______  _______  __   __  _______    ______    _______  _______ " << endl;
 	gotoxy(27, 2);
 	cout << "|       ||       ||  |_|  ||       |  |    _ |  |       ||       |" << endl;
@@ -188,6 +199,8 @@ int main() {
 	gotoxy(27, 7);
 	cout << "  |___|  |_______||__| |__|  |___|    |___|  |_||___|    |_______|" << endl;
 	
+#define DARKGRAY 8
+
 	/*cout << "\n\n\n\n";
 	cout << "\t\t"; cout << "@@@@@@@@@@   @@@@@@@@@   @@@   @@@   @@@@@@@@@@   @@@@@@@@    @@@@@@@@   @@@@@@@\n";
 	cout << "\t\t"; cout << "    @        @             @   @         @        @      @    @      @   @          \n";
@@ -197,6 +210,7 @@ int main() {
 	cout << "\t\t"; cout << "    @        @             @   @         @        @       @   @          @       @  \n";
 	cout << "\t\t"; cout << "    @        @@@@@@@@@   @@@   @@@       @         @      @   @          @@@@@@@@\n\n\n\n\n";*/
 
+	textcolor(DARKGRAY, BLACK);
 	gotoxy(16, 10);
 	cout << "                          게임을 시작하려면 <Enter>를 누르세요."<<endl;
 	gotoxy(13, 11);
@@ -204,26 +218,32 @@ int main() {
 	getchar(); // 아무키 입력 기다림
 
 	system("cls");
+	textcolor(DARKGRAY, BLACK);
 	cout << "이름을 입력해 주세요." << endl;
-
+	textcolor(YELLOW, BLACK);
 	cin.getline(tPlayer.strName, NAME_SIZE - 1);
 	system("cls");
+	
+	textcolor(DARKGRAY, BLACK);
 	cout << "어느 왕국에 정신나간 왕이 게임을 만들며 살고 있었습니다." << endl;
 	cout << "그런데 갑자기 왕이 코딩이 너무나도 하기 싫어져서 망령을 소환하였습니다." << endl;
 	cout << "하지만 망령도 역시나 농땡이만 쳤고, 결국 왕국은 멸망하였습니다." << endl;
 
 	cout << "몇 십년이 흐르고..." << endl;
+	
 	cout << "용사 " << tPlayer.strName << "<은>는 왕국의 잊혀진 보물들을 찾아 모험을 시작합니다." << endl;
+	textcolor(YELLOW, BLACK);
 	cout << endl << endl << "환영합니다. 용사 " << tPlayer.strName << "님" << endl << endl << endl;
 
 	int iJob = JOB_NONE;
 
 	while (iJob == JOB_NONE)
 	{
+		textcolor(DARKGRAY, BLACK);
 		system("pause");
 		cout << endl;
-
-		cout << "직업을 선택하세요 : " << endl;
+		textcolor(YELLOW, BLACK);
+		cout << "직업을 선택하세요." << endl;
 		cout << "1 : 기사\t";
 		cout << "2 : 궁수\t";
 		cout << "3 : 마법사" << endl;
@@ -393,14 +413,19 @@ int main() {
 
 	while (true) {
 		system("cls");
+		gotoxy(43, 1);
 		cout << "--------------- LOBY --------------" << endl;
+		gotoxy(43, 3);
 		cout << "메뉴를 선택하세요." << endl;
-		cout << "1. 맵\t";
-		cout << "2. 상점\t";
-		cout << "3. 가방\t";
+		gotoxy(43, 5);
+		cout << "1. 맵    ";
+		cout << "2. 상점   ";
+		cout << "3. 가방   ";
 		cout << "4. 종료" << endl;
 
+		
 		int iMenu;
+		gotoxy(43, 6);
 		cin >> iMenu;
 
 		if (cin.fail()) {
@@ -420,13 +445,19 @@ int main() {
 			while (true)
 			{
 				system("cls");
+				gotoxy(43, 1);
 				cout << "--------------- MAP --------------" << endl;
+				gotoxy(43, 3);
 				cout << "맵을 선택하세요." << endl;
-				cout << "1. 쉬움"<<endl;
-				cout << "2. 보통"<<endl;
-				cout << "3. 어려움"<<endl;
+				gotoxy(43, 5);
+				cout << "1. 쉬움    ";
+				cout << "2. 보통    ";
+				cout << "3. 어려움  ";
+
+				gotoxy(96, 27);
 				cout << "4. 뒤로가기"<<endl;		
 
+				gotoxy(43, 6);
 				cin >> iMenu;
 
 				if (cin.fail()) {
@@ -448,72 +479,102 @@ int main() {
 					switch (iMenu)
 					{
 					case MT_EASY:
+						gotoxy(43, 2);
 						cout << "--------------- EASY --------------" << endl; break;
 
 					case MT_NORMAL:
+						gotoxy(43, 2);
 						cout << "--------------- NORMAL --------------" << endl; break;
 					case MT_HARD:
+						gotoxy(43, 2);
 						cout << "--------------- HARD --------------" << endl; break;
 					}
 					//플레이어 정보 출력를 출력한다.
 
+					gotoxy(43, 4);
 					cout << "이름 : " << tPlayer.strName << endl;
-					cout << "\t직업 : " << tPlayer.strJobName << endl;
-					cout << "레벨 : " << tPlayer.iLevel << "\t경험치 : " <<
+					gotoxy(43, 5);
+					cout << "직업 : " << tPlayer.strJobName << endl;
+					gotoxy(43, 6);
+					cout << "레벨 : " << "lv."<<tPlayer.iLevel << "\t경험치 : " <<
 						tPlayer.iExp << " / " << iLevelUpExp[tPlayer.iLevel-1]<<endl;
 					
 					//무기를 장착하고 있을 경우 공격력에 무기공격력을 추가하여 출력한다.
 					if (tPlayer.bEquip[EQ_WEAPON] == true) {
+						gotoxy(43, 7);
 						cout << "공격력 : " << tPlayer.iAttackMin << " + " <<
 							tPlayer.tEquip[EQ_WEAPON].iMin << " - " <<
 							tPlayer.iAttackMax << " + " << tPlayer.tEquip[EQ_WEAPON].iMax;
 					}
 
 					else {
+						gotoxy(43, 7);
 						cout << "공격력 : " << tPlayer.iAttackMin << " - " <<
 							tPlayer.iAttackMax;
 					}
 
 					//방어구를 장착하고 있을 경우 방어력에 방어구 방어력을 추가하여 출력한다.
 					if (tPlayer.bEquip[EQ_ARMOR] == true) {
+						gotoxy(43, 7);
 						cout << "\t방어력 : " << tPlayer.iArmorMin << " - " <<
 							tPlayer.iArmorMax << " + " << tPlayer.tEquip[EQ_WEAPON].iMax;
 					}
 					else {
-						cout << "\t방어력 : " << tPlayer.iArmorMin << " - " <<
+						gotoxy(43, 7);
+						cout << "방어력 : " << tPlayer.iArmorMin << " - " <<
 							tPlayer.iArmorMax << endl;
 					}
-
-					cout << "\t체력 : " << tPlayer.iHP << " / " << tPlayer.iHPMax << endl;
+					gotoxy(43, 8);
+					cout << "체력 : " << tPlayer.iHP << " / " << tPlayer.iHPMax << endl;
+					gotoxy(43, 9);
 					cout << "게이지 : " << tPlayer.iMP << " / " << tPlayer.iMPMax << endl;
 
-					if (tPlayer.bEquip[EQ_WEAPON])
+					if (tPlayer.bEquip[EQ_WEAPON]){
+						gotoxy(43, 9);
 						cout << "장착무기 : " << tPlayer.tEquip[EQ_WEAPON].strName;
+					}
 
-					else
+					else{
+						gotoxy(43, 9);
 						cout << "장착 무기 : 없음       ";
-
-					if (tPlayer.bEquip[EQ_ARMOR])
-						cout << "\t장착 방어구 : " << tPlayer.tEquip[EQ_ARMOR].strName;
-
-					else
-						cout << "\t장착방어구 : 없음"<<endl;
-
+					}
+					if (tPlayer.bEquip[EQ_ARMOR]){
+						gotoxy(43, 10);
+					
+						cout << "장착 방어구 : " << tPlayer.tEquip[EQ_ARMOR].strName;
+					}
+					else{
+						gotoxy(43, 10);
+						cout << "장착방어구 : 없음"<<endl;
+					}
+					gotoxy(43, 11);
+					
 					cout << "보유골드 : " << tPlayer.tInventory.iGold << " Gold" << endl << endl;
 
 					//몬스터 정보 출력
+					gotoxy(43, 13);
+					textcolor(LIGHTRED, BLACK);
 					cout << "---------------MONSTER---------------" << endl;
-					cout << "이름 : " << tMonster.strName << "\t레벨 : " <<
-						tPlayer.iLevel << endl;
+					gotoxy(43, 14);
+					cout << "이름 : " << tMonster.strName << endl;
+					gotoxy(43, 15);
+					cout <<"레벨 : " << "lv." << tPlayer.iLevel << endl;
+					gotoxy(43, 16);
 					cout << "공격력 : " << tMonster.iAttackMin << " - " <<
 						tMonster.iAttackMin << " - " <<
-						tMonster.iAttackMax << "\t방어력 : " << tMonster.iArmorMin <<
+						tMonster.iAttackMax << endl;
+					gotoxy(43, 17);
+						cout << "방어력 : " << tMonster.iArmorMin <<
 						" - " << tMonster.iArmorMax << endl;
+					gotoxy(43, 18);
 					cout << "체력 : " << tMonster.iHP << " / " << tMonster.iHPMax << endl;
+					gotoxy(43, 19);
 					cout << "마나 : " << tMonster.iMP << " / " << tMonster.iMPMax << endl;
+					gotoxy(43, 20);
 					cout << "획득경험치 : " << tMonster.iExp << "\t획득골드 : " <<
 						tMonster.iGoldMin << " - " << tMonster.iGoldMax << endl << endl;
 
+					textcolor(YELLOW, BLACK);
 					cout << "1. 공격" << endl;
 					cout << "2. 도망가기" << endl;
 					cout << "3. 라운드 끝내기" << endl;
@@ -562,12 +623,18 @@ int main() {
 							iDamage = 1;*/
 
 							//몬스터 HP를 감소시킨다.
+
+						
 						tMonster.iHP -= iDamage;
+
+						Sleep(500);
 						cout << tPlayer.strName << " 가 " << tMonster.strName <<
 							"에게 " << iDamage << " 피해를 입혔습니다." << endl;
+						Sleep(500);
 
 						//몬스터가 죽었을 경우를 처리한다.
 						if (tMonster.iHP <= 0) {
+							Sleep(500);
 							cout << tMonster.strName << " 몬스터가 사망하였습니다." << endl; 
 							
 
@@ -617,7 +684,8 @@ int main() {
 									tPlayer.iMP = tPlayer.iMPMax;
 								}
 
-								
+	#define LIGHTCYAN 11
+								textcolor(LIGHTCYAN, BLACK);
 								gotoxy(20, 1);
 								cout << " _______  _______  __   __  _______    _______  ___      _______  _______  ______   " << endl;
 								gotoxy(20, 2);
@@ -633,6 +701,7 @@ int main() {
 								gotoxy(20, 7);
 								cout << "|_______||__| |__||_|   |_||_______|  |_______||_______||_______||__| |__||___|  |_|" << endl<<endl;
 
+								textcolor(YELLOW, BLACK);
 								cout << "게임으로 돌아가시겠습니까? " << endl;
 								cout << "1. 돌아가기\t" << endl;
 
@@ -676,6 +745,7 @@ int main() {
 						//몬스터 HP를 감소시킨다.
 						tPlayer.iHP -= iDamage;
 
+
 						cout << tMonster.strName << " 가 " << tPlayer.strName <<
 							"에게 " << iDamage << " 피해를 입혔습니다." << endl;
 
@@ -696,6 +766,7 @@ int main() {
 							tPlayer.iMP = tPlayer.iMPMax;*/
 
 							system("cls");
+							textcolor(LIGHTRED, BLACK);
 							gotoxy(20, 1);
 							cout << "_______  _______  __   __  _______    _______  __   __  _______  ______   " << endl;
 							gotoxy(20, 2);
@@ -711,7 +782,7 @@ int main() {
 							gotoxy(20, 7);
 							cout << "|_______||__| |__||_|   |_||_______|  |_______|  |___|  |_______||___|  |_|" << endl<<endl;
 							
-							
+							textcolor(YELLOW, BLACK);
 							exit(0);
 
 
@@ -727,12 +798,19 @@ int main() {
 			while (true)
 			{
 				system("cls");
+				gotoxy(43, 1);
 				cout << "---------------STORE---------------" << endl;
-				cout << "1. 무기상점" << endl;
-				cout << "2. 방어구상점" << endl;
-				cout << "3. 뒤로가기" << endl;
-				cout << "상점을 선택하세요 : ";
+				gotoxy(43, 3);
+				cout << "상점을 선택하세요.";
+				gotoxy(43, 5);
+				cout << "1. 무기상점        ";
+				cout << "2. 방어구상점"<<endl;
+				gotoxy(96, 27);
+				cout << "3. 뒤로가기"<<endl;
+				
+				gotoxy(43, 6);
 				cin >> iMenu;
+
 
 				if (cin.fail()) {
 					cin.clear();
@@ -745,19 +823,24 @@ int main() {
 				case SM_WEAPON:
 					while (true) {
 						system("cls");
+						gotoxy(43, 1);
 						cout << "--------------- 무기상점---------------" << endl;
 						//판매목록을 보여준다
 						for (int i = 0; i < STORE_WEAPON_MAX; ++i)
 						{
+							
 							cout << i + 1 << ". 이름 : " << tStoreWeapon[i].strName <<
 								"\t종류 : " << tStoreWeapon[i].strTypeName << endl;
+							
 							cout << "공격력 : " << tStoreWeapon[i].iMin << " - "
 								<< tStoreWeapon[i].iMax << endl;
+							
 							cout << "판매가격 : " << tStoreWeapon[i].iPrice <<
 								"\t구매가격 : " << tStoreWeapon[i].iSell << endl;
+							
 							cout << "설명 : " << tStoreWeapon[i].strDesc << endl << endl;
 						}
-
+						
 						cout << STORE_WEAPON_MAX + 1 << ". 뒤로가기" << endl;
 						cout << "보유금액 : " << tPlayer.tInventory.iGold << "Gold" << endl;
 						cout << "남은공간 : " << INVENTORY_MAX - tPlayer.tInventory.iItemCount << endl;
@@ -811,18 +894,24 @@ int main() {
 					while (true)
 					{
 						system("cls");
+						gotoxy(43, 1);
 						cout << "------------ 방어구상점 ------------" << endl;
 
 						//판매 목록을 보여준다.
 						for (int i = 0; i < STORE_ARMOR_MAX; ++i) {
+							
 							cout << i + 1 << ". 이름 : " << tStoreArmor[i].strName <<
 								"\t종류 : " << tStoreArmor[i].strTypeName << endl;
+							
 							cout << "공격력 : " << tStoreArmor[i].iMin << " - " <<
 								tStoreArmor[i].iMax << endl;
+							
 							cout << "판매가격 : " << tStoreArmor[i].iPrice <<
 								"\t구매가격 : " << tStoreArmor[i].iSell << endl;
+							
 							cout << "설명 : " << tStoreArmor[i].strDesc << endl << endl;
 						}
+						gotoxy(96, 15);
 						cout << STORE_ARMOR_MAX + 1 << ". 뒤로가기" << endl;
 						cout << "보유금액 : " << tPlayer.tInventory.iGold << " Gold" << endl;
 						cout << "남은공간 : " << INVENTORY_MAX - tPlayer.tInventory.iItemCount << endl;
@@ -881,11 +970,13 @@ int main() {
 			{
 
 				system("cls");
+				gotoxy(43, 1);
 				cout << "------------------- BAG ------------------" << endl;
 
-			
+				gotoxy(43, 3);
 				cout << "체력 : " << tPlayer.iHP << " / " << tPlayer.iHPMax <<
 					"\t마나 : " << tPlayer.iMP << " / " << tPlayer.iMPMax << endl;
+				gotoxy(43, 2);
 				cout << "보유골드 : " << tPlayer.tInventory.iGold << " Gold" << endl << endl;
 
 				for (int i = 0; i < tPlayer.tInventory.iItemCount; i++) {
@@ -898,7 +989,7 @@ int main() {
 					cout << "설명 : " << tPlayer.tInventory.tItem[i].strDesc << endl << endl;
 				}
 
-
+				gotoxy(96, 10);
 				cout << tPlayer.tInventory.iItemCount + 1 << ". 뒤로가기" << endl;
 				cout << "장착할 아이템을 선택하세요 : ";
 				cin >> iMenu;
