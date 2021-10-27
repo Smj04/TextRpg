@@ -237,16 +237,21 @@ int main() {
 
 	int iJob = JOB_NONE;
 
+	#define LIGHTBLUE 9
+
 	while (iJob == JOB_NONE)
 	{
 		textcolor(DARKGRAY, BLACK);
 		system("pause");
 		cout << endl;
 		textcolor(YELLOW, BLACK);
+		gotoxy(43, 12);
 		cout << "직업을 선택하세요." << endl;
-		cout << "1 : 기사\t";
-		cout << "2 : 궁수\t";
-		cout << "3 : 마법사" << endl;
+		
+		gotoxy(43, 14);
+		cout << "1. 기사    2. 궁수    3. 마법사"<<endl;
+
+		
 
 		cin >> iJob;
 
@@ -627,14 +632,14 @@ int main() {
 						
 						tMonster.iHP -= iDamage;
 
-						Sleep(500);
+						Sleep(300);
 						cout << tPlayer.strName << " 가 " << tMonster.strName <<
 							"에게 " << iDamage << " 피해를 입혔습니다." << endl;
-						Sleep(500);
+						Sleep(300);
 
 						//몬스터가 죽었을 경우를 처리한다.
 						if (tMonster.iHP <= 0) {
-							Sleep(500);
+							
 							cout << tMonster.strName << " 몬스터가 사망하였습니다." << endl; 
 							
 
