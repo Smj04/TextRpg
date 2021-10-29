@@ -175,8 +175,8 @@ int main() {
 	tLvUpTable[JOB_WIZARD - 1].iArmorMin = 3;
 	tLvUpTable[JOB_WIZARD - 1].iArmorMax = 7;
 	tLvUpTable[JOB_WIZARD - 1].iHPMin = 20;
-	tLvUpTable[JOB_WIZARD - 1].iHPMax = 40;
-	tLvUpTable[JOB_WIZARD - 1].iMPMin = 50;
+	tLvUpTable[JOB_WIZARD - 1].iHPMax = 50;		//40
+	tLvUpTable[JOB_WIZARD - 1].iMPMin = 40;
 	tLvUpTable[JOB_WIZARD - 1].iMPMax = 100;
 
 
@@ -272,8 +272,6 @@ int main() {
 		gotoxy(43, 14);
 		cout << "1. 기사    2. 궁수    3. 마법사"<<endl;
 
-		
-
 		cin >> iJob;
 
 		if (cin.fail()) {
@@ -343,7 +341,6 @@ int main() {
 	tMonsterArr[0].iGoldMax = 1500;
 
 
-
 	//트롤 생성
 	strcpy_s(tMonsterArr[1].strName, "트롤");
 	tMonsterArr[1].iAttackMin = 80;
@@ -408,7 +405,6 @@ int main() {
 	tStoreWeapon[2].iSell = 15000;
 
 
-
 	//(방어구 상점) 각 아이템 정보를 설정한다
 	strcpy_s(tStoreArmor[0].strName, "천갑옷");
 	strcpy_s(tStoreArmor[0].strTypeName, "방어구");
@@ -460,15 +456,15 @@ int main() {
 		cout << "MY PAGE" << endl;
 		gotoxy(80, 13);
 		cout << "-------" << endl;
-		////무기를 장착하고 있을 경우 공격력에 무기공격력을 추가하여 출력한다.
+		//무기를 장착하고 있을 경우 공격력에 무기공격력을 추가하여 출력한다.
 
 					gotoxy(80, 14);
 					cout << "게이지 : " << tPlayer.iMP << " / " << tPlayer.iMPMax << endl;
 
 					if (tPlayer.bEquip[EQ_WEAPON] == true) {
 						gotoxy(80, 16);
-						cout << "공격력 : " << tPlayer.iAttackMin << " + " <<
-							tPlayer.tEquip[EQ_WEAPON].iMin << " - " <<
+						cout << "공격력 : " << tPlayer.iAttackMin << " + " <<		
+							tPlayer.tEquip[EQ_WEAPON].iMax << " - " <<
 							tPlayer.iAttackMax << " + " << tPlayer.tEquip[EQ_WEAPON].iMax;
 					}
 
@@ -490,8 +486,6 @@ int main() {
 							tPlayer.iArmorMax << endl;
 					}
 
-					
-
 					if (tPlayer.bEquip[EQ_WEAPON]){
 						gotoxy(80, 19);
 						cout << "장착무기 : " << tPlayer.tEquip[EQ_WEAPON].strName;
@@ -510,19 +504,16 @@ int main() {
 						gotoxy(80, 20);
 						cout << "장착방어구 : 없음"<<endl;
 					}
-					/*gotoxy(43, 12);
-
-					cout << "보유골드 : " << tPlayer.tInventory.iGold << " Gold" << endl << endl;*/
+					
+					gotoxy(80, 22);
+					textcolor(WHITE, BLACK);
+					cout << "보유골드 : " << tPlayer.tInventory.iGold << " Gold" << endl << endl;
 
 		textcolor(YELLOW, BLACK);
 		int iMenu;
 		gotoxy(43, 6);
 		cin >> iMenu;
 		
-
-		
-
-
 		textcolor(YELLOW, BLACK);
 		if (cin.fail()) {
 			cin.clear();
@@ -532,8 +523,6 @@ int main() {
 
 		if (iMenu == MM_EXIT)
 			break;
-
-
 
 		switch (iMenu)
 		{
@@ -567,7 +556,7 @@ int main() {
 				if (iMenu == MT_BACK) break;
 
 				//선택한 메뉴에서 1을 빼주면 몬스터 배열의 인덱스가 된다.
-		//그렇게 해서 해당 맵의 몬스터를 생성해준다
+				//그렇게 해서 해당 맵의 몬스터를 생성해준다
 				_Monster tMonster = tMonsterArr[iMenu - 1];
 
 				while (true) {
@@ -749,7 +738,7 @@ int main() {
 									tPlayer.iMP = tPlayer.iMPMax;
 								}
 
-	#define LIGHTCYAN 11
+								#define LIGHTCYAN 11
 								textcolor(LIGHTCYAN, BLACK);
 								gotoxy(20, 1);
 								cout << " _______  _______  __   __  _______    _______  ___      _______  _______  ______   " << endl;
@@ -772,16 +761,13 @@ int main() {
 
 								cin >> iMenu;
 								if (iMenu == 1) {
-
-									
-									break;
-									
+									break;		
 								}
 								
 							}
 							
 							/*tMonster.iHP = tMonster.iHPMax;
-							tMonster.iMP = tMonster.iMPMax;*/
+							tMonster.iMP = tMonster.iMPMax;  무한부활*/
 							
 						}
 						// 몬스터가 살아있다면 플레이어를 공격한다.
@@ -849,7 +835,6 @@ int main() {
 							
 							textcolor(YELLOW, BLACK);
 							exit(0);
-
 
 						}
 						/*system("pause");*/
@@ -925,7 +910,9 @@ int main() {
 							break;
 
 						else if (iMenu<1 || iMenu > STORE_WEAPON_MAX + 1) {
+							textcolor(LIGHTRED, BLACK);
 							cout << "잘못 선택하였습니다." << endl;
+							textcolor(YELLOW, BLACK);
 							system("pause");
 							continue;
 						}
@@ -1001,7 +988,9 @@ int main() {
 							break;
 
 						else if (iMenu<1 || iMenu > STORE_ARMOR_MAX + 1) {
+							textcolor(LIGHTRED, BLACK);
 							cout << "잘못 선택하였습니다." << endl;
+							textcolor(YELLOW, BLACK);
 							system("pause");
 							continue;
 						}
@@ -1055,13 +1044,18 @@ int main() {
 				gotoxy(43, 2);
 				cout << "보유골드 : " << tPlayer.tInventory.iGold << " Gold" << endl << endl;
 
+				
 				for (int i = 0; i < tPlayer.tInventory.iItemCount; i++) {
+					
 					cout << i + 1 << ". 이름 : " << tPlayer.tInventory.tItem[i].strName <<
 						"\t종류 : " << tPlayer.tInventory.tItem[i].strTypeName << endl;
+					
 					cout << "공격력 : " << tPlayer.tInventory.tItem[i].iMin << " - "
 						<< tPlayer.tInventory.tItem[i].iMax << endl;
+					
 					cout << "판매가격 : " << tPlayer.tInventory.tItem[i].iPrice <<
 						"\t구매가격 : " << tPlayer.tInventory.tItem[i].iSell << endl;
+					
 					cout << "설명 : " << tPlayer.tInventory.tItem[i].strDesc << endl << endl;
 				}
 
@@ -1081,8 +1075,9 @@ int main() {
 
 				else if (iMenu<1 || iMenu > tPlayer.tInventory.iItemCount + 1) {
 
-
+					textcolor(LIGHTRED, BLACK);
 					cout << "잘못 선택하였습니다." << endl;
+					textcolor(YELLOW, BLACK);
 					system("pause");
 					continue;
 				}
@@ -1130,7 +1125,9 @@ int main() {
 			}
 			break;
 		default:
+			textcolor(LIGHTRED, BLACK);
 			cout << "잘 못선택하셨습니다." << endl;
+			textcolor(YELLOW, BLACK);
 			break;
 			}
 		}
@@ -1138,4 +1135,3 @@ int main() {
 	return 0;
 
 }
-
