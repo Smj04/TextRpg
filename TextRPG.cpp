@@ -459,53 +459,56 @@ int main() {
 		//무기를 장착하고 있을 경우 공격력에 무기공격력을 추가하여 출력한다.
 
 					gotoxy(80, 14);
+					cout << "레벨 : " << "lv." << tPlayer.iLevel << endl;
+
+					gotoxy(80, 15);
 					cout << "게이지 : " << tPlayer.iMP << " / " << tPlayer.iMPMax << endl;
 
 					if (tPlayer.bEquip[EQ_WEAPON] == true) {
-						gotoxy(80, 16);
+						gotoxy(80, 17);
 						cout << "공격력 : " << tPlayer.iAttackMin << " + " <<		
 							tPlayer.tEquip[EQ_WEAPON].iMax << " - " <<
 							tPlayer.iAttackMax << " + " << tPlayer.tEquip[EQ_WEAPON].iMax;
 					}
 
 					else {
-						gotoxy(80, 16);
+						gotoxy(80, 17);
 						cout << "공격력 : " << tPlayer.iAttackMin << " - " <<
 							tPlayer.iAttackMax;
 					}
 
 					////방어구를 장착하고 있을 경우 방어력에 방어구 방어력을 추가하여 출력한다.
 					if (tPlayer.bEquip[EQ_ARMOR] == true) {
-						gotoxy(80, 17);
+						gotoxy(80, 18);
 						cout << "방어력 : " << tPlayer.iArmorMin << " - " <<
 							tPlayer.iArmorMax << " + " << tPlayer.tEquip[EQ_WEAPON].iMax;
 					}
 					else {
-						gotoxy(80, 17);
+						gotoxy(80, 18);
 						cout << "방어력 : " << tPlayer.iArmorMin << " - " <<
 							tPlayer.iArmorMax << endl;
 					}
 
 					if (tPlayer.bEquip[EQ_WEAPON]){
-						gotoxy(80, 19);
+						gotoxy(80, 20);
 						cout << "장착무기 : " << tPlayer.tEquip[EQ_WEAPON].strName;
 					}
 
 					else{
-						gotoxy(80, 19);
+						gotoxy(80, 20);
 						cout << "장착 무기 : 없음       ";
 					}
 					if (tPlayer.bEquip[EQ_ARMOR]){
-						gotoxy(80, 20);
+						gotoxy(80, 21);
 
 						cout << "장착 방어구 : " << tPlayer.tEquip[EQ_ARMOR].strName;
 					}
 					else{
-						gotoxy(80, 20);
+						gotoxy(80, 21);
 						cout << "장착방어구 : 없음"<<endl;
 					}
 					
-					gotoxy(80, 22);
+					gotoxy(80, 23);
 					textcolor(WHITE, BLACK);
 					cout << "보유골드 : " << tPlayer.tInventory.iGold << " Gold" << endl << endl;
 
@@ -592,7 +595,7 @@ int main() {
 					cout << "직업 : " << tPlayer.strJobName << endl;
 					gotoxy(43, 5);
 					textcolor(WHITE, BLACK);
-					/*cout << "레벨 : " << "lv."<<tPlayer.iLevel*/
+					
 					 cout << "체력 : " << tPlayer.iHP << " / " << tPlayer.iHPMax << endl;
 						
 					
