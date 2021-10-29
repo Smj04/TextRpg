@@ -201,7 +201,7 @@ int main() {
 	cout << "  |___|  |_______||__| |__|  |___|    |___|  |_||___|    |_______|" << endl;
 	
 #define DARKGRAY 8
-
+#define WHITE 15 
 	/*cout << "\n\n\n\n";
 	cout << "\t\t"; cout << "@@@@@@@@@@   @@@@@@@@@   @@@   @@@   @@@@@@@@@@   @@@@@@@@    @@@@@@@@   @@@@@@@\n";
 	cout << "\t\t"; cout << "    @        @             @   @         @        @      @    @      @   @          \n";
@@ -216,12 +216,13 @@ int main() {
 	cout << "                          게임을 시작하려면 <Enter>를 누르세요."<<endl;
 	gotoxy(18, 19);
 	cout << "                                TextRPG.0 By MinjeoungSeo"<<endl;
-	
+
+	textcolor(WHITE, BLACK);
 	getchar(); // 아무키 입력 기다림
 
 	system("cls");
-	#define WHITE 15 
-	textcolor(WHITE, BLACK);
+	
+	
 	/*gotoxy(50, 0);
 	cout << "이름을 입력해 주세요 : " << endl;*/
 	gotoxy(12, 10);
@@ -261,7 +262,7 @@ int main() {
 
 	while (iJob == JOB_NONE)
 	{
-		textcolor(DARKGRAY, BLACK);
+		textcolor(WHITE, BLACK);
 		system("pause");
 		cout << endl;
 		textcolor(YELLOW, BLACK);
@@ -446,13 +447,83 @@ int main() {
 		cout << "1. 맵    ";
 		cout << "2. 상점   ";
 		cout << "3. 가방   ";
+
+		textcolor(LIGHTRED, BLACK);
 		cout << "4. 종료" << endl;
 
-		
+		#define LIGHTMAGENTA 13 
+		/*MY PAGE 만들기*/
+
+		textcolor(LIGHTMAGENTA, BLACK);
+
+		gotoxy(80, 12);
+		cout << "MY PAGE" << endl;
+		gotoxy(80, 13);
+		cout << "-------" << endl;
+		////무기를 장착하고 있을 경우 공격력에 무기공격력을 추가하여 출력한다.
+
+					gotoxy(80, 14);
+					cout << "게이지 : " << tPlayer.iMP << " / " << tPlayer.iMPMax << endl;
+
+					if (tPlayer.bEquip[EQ_WEAPON] == true) {
+						gotoxy(80, 16);
+						cout << "공격력 : " << tPlayer.iAttackMin << " + " <<
+							tPlayer.tEquip[EQ_WEAPON].iMin << " - " <<
+							tPlayer.iAttackMax << " + " << tPlayer.tEquip[EQ_WEAPON].iMax;
+					}
+
+					else {
+						gotoxy(80, 16);
+						cout << "공격력 : " << tPlayer.iAttackMin << " - " <<
+							tPlayer.iAttackMax;
+					}
+
+					////방어구를 장착하고 있을 경우 방어력에 방어구 방어력을 추가하여 출력한다.
+					if (tPlayer.bEquip[EQ_ARMOR] == true) {
+						gotoxy(80, 17);
+						cout << "방어력 : " << tPlayer.iArmorMin << " - " <<
+							tPlayer.iArmorMax << " + " << tPlayer.tEquip[EQ_WEAPON].iMax;
+					}
+					else {
+						gotoxy(80, 17);
+						cout << "방어력 : " << tPlayer.iArmorMin << " - " <<
+							tPlayer.iArmorMax << endl;
+					}
+
+					
+
+					if (tPlayer.bEquip[EQ_WEAPON]){
+						gotoxy(80, 19);
+						cout << "장착무기 : " << tPlayer.tEquip[EQ_WEAPON].strName;
+					}
+
+					else{
+						gotoxy(80, 19);
+						cout << "장착 무기 : 없음       ";
+					}
+					if (tPlayer.bEquip[EQ_ARMOR]){
+						gotoxy(80, 20);
+
+						cout << "장착 방어구 : " << tPlayer.tEquip[EQ_ARMOR].strName;
+					}
+					else{
+						gotoxy(80, 20);
+						cout << "장착방어구 : 없음"<<endl;
+					}
+					/*gotoxy(43, 12);
+
+					cout << "보유골드 : " << tPlayer.tInventory.iGold << " Gold" << endl << endl;*/
+
+		textcolor(YELLOW, BLACK);
 		int iMenu;
 		gotoxy(43, 6);
 		cin >> iMenu;
+		
 
+		
+
+
+		textcolor(YELLOW, BLACK);
 		if (cin.fail()) {
 			cin.clear();
 			cin.ignore(1024, '\n');
@@ -536,58 +607,11 @@ int main() {
 					 cout << "체력 : " << tPlayer.iHP << " / " << tPlayer.iHPMax << endl;
 						
 					
-					////무기를 장착하고 있을 경우 공격력에 무기공격력을 추가하여 출력한다.
-					//if (tPlayer.bEquip[EQ_WEAPON] == true) {
-					//	gotoxy(43, 6);
-					//	cout << "공격력 : " << tPlayer.iAttackMin << " + " <<
-					//		tPlayer.tEquip[EQ_WEAPON].iMin << " - " <<
-					//		tPlayer.iAttackMax << " + " << tPlayer.tEquip[EQ_WEAPON].iMax;
-					//}
-
-					//else {
-					//	gotoxy(43, 6);
-					//	cout << "공격력 : " << tPlayer.iAttackMin << " - " <<
-					//		tPlayer.iAttackMax;
-					//}
-
-					////방어구를 장착하고 있을 경우 방어력에 방어구 방어력을 추가하여 출력한다.
-					//if (tPlayer.bEquip[EQ_ARMOR] == true) {
-					//	gotoxy(43, 7);
-					//	cout << "\t방어력 : " << tPlayer.iArmorMin << " - " <<
-					//		tPlayer.iArmorMax << " + " << tPlayer.tEquip[EQ_WEAPON].iMax;
-					//}
-					//else {
-					//	gotoxy(43, 7);
-					//	cout << "방어력 : " << tPlayer.iArmorMin << " - " <<
-					//		tPlayer.iArmorMax << endl;
-					//}
+					
 					textcolor(YELLOW, BLACK);
 					gotoxy(43, 6);
 					cout <<"경험치 : "<< tPlayer.iExp << " / " << iLevelUpExp[tPlayer.iLevel - 1] << endl;
-					/*gotoxy(43, 9);
-					cout << "게이지 : " << tPlayer.iMP << " / " << tPlayer.iMPMax << endl;*/
 					
-					/*if (tPlayer.bEquip[EQ_WEAPON]){
-						gotoxy(43, 7);
-						cout << "장착무기 : " << tPlayer.tEquip[EQ_WEAPON].strName;
-					}
-
-					else{
-						gotoxy(43, 7);
-						cout << "장착 무기 : 없음       ";
-					}
-					if (tPlayer.bEquip[EQ_ARMOR]){
-						gotoxy(43, 8);
-					
-						cout << "장착 방어구 : " << tPlayer.tEquip[EQ_ARMOR].strName;
-					}
-					else{
-						gotoxy(43, 8);
-						cout << "장착방어구 : 없음"<<endl;
-					}*/
-					/*gotoxy(43, 12);
-					
-					cout << "보유골드 : " << tPlayer.tInventory.iGold << " Gold" << endl << endl;*/
 
 					//몬스터 정보 출력
 					gotoxy(43, 10);
@@ -881,10 +905,15 @@ int main() {
 							
 							cout << "설명 : " << tStoreWeapon[i].strDesc << endl << endl;
 						}
-						
+						gotoxy(96, 15);
 						cout << STORE_WEAPON_MAX + 1 << ". 뒤로가기" << endl;
+
+						cout << endl;
+						textcolor(WHITE, BLACK);
 						cout << "보유금액 : " << tPlayer.tInventory.iGold << "Gold" << endl;
-						cout << "남은공간 : " << INVENTORY_MAX - tPlayer.tInventory.iItemCount << endl;
+						cout << "남은공간 : " << INVENTORY_MAX - tPlayer.tInventory.iItemCount << endl<<endl;
+
+						textcolor(YELLOW, BLACK);
 						cout << "구입할 아이템을 선택하세요 : ";
 						cin >> iMenu;
 
@@ -954,8 +983,13 @@ int main() {
 						}
 						gotoxy(96, 15);
 						cout << STORE_ARMOR_MAX + 1 << ". 뒤로가기" << endl;
+						cout << endl;
+
+						textcolor(WHITE, BLACK);
 						cout << "보유금액 : " << tPlayer.tInventory.iGold << " Gold" << endl;
-						cout << "남은공간 : " << INVENTORY_MAX - tPlayer.tInventory.iItemCount << endl;
+						cout << "남은공간 : " << INVENTORY_MAX - tPlayer.tInventory.iItemCount << endl<<endl;
+
+						textcolor(YELLOW, BLACK);
 						cout << "구입할 아이템을 선택하세요 : ";
 						cin >> iMenu;
 
