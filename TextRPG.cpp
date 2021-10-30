@@ -687,8 +687,8 @@ int main() {
 						Sleep(300);
 						cout << tPlayer.strName << " 가 " << tMonster.strName <<
 							"에게 " << iDamage << " 피해를 입혔습니다." << endl;
+						
 						Sleep(300);
-
 						//몬스터가 죽었을 경우를 처리한다.
 						if (tMonster.iHP <= 0) {
 							
@@ -799,10 +799,11 @@ int main() {
 						//몬스터 HP를 감소시킨다.
 						tPlayer.iHP -= iDamage;
 
-
+						Sleep(300);
 						cout << tMonster.strName << " 가 " << tPlayer.strName <<
 							"에게 " << iDamage << " 피해를 입혔습니다." << endl;
 
+						Sleep(300);
 						if (tPlayer.iHP <= 0) {
 							cout << tPlayer.strName << " 플레이어가 사망하였습니다." << endl;
 
